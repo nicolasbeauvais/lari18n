@@ -16,24 +16,24 @@
 
 To install Lari18n as a Composer package to be used with Laravel 4, simply add this to your composer.json:
 
-`
-    "nicolasbeauvais/lari18n": "dev-master"
-`
+```
+  "nicolasbeauvais/lari18n": "dev-master"
+```
 
 #### Setup
 
 You should comment (or remove) the laravel translation service provider and use lari18n instead
 
 ```
-         'providers' => array(
-             // ...
-             //'Illuminate\Translation\TranslationServiceProvider',
-             // ...
-             'Nicolasbeauvais\Lari18n\Lari18nServiceProvider'
-         ),
+  'providers' => array(
+      // ...
+      //'Illuminate\Translation\TranslationServiceProvider',
+      // ...
+      'Nicolasbeauvais\Lari18n\Lari18nServiceProvider'
+  ),
 ```
-
 Now, every time you use `trans()` or `Lang::get()` lari18n will be able to do some magic work.
+
 
 
 ## License
