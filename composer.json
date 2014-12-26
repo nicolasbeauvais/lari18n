@@ -2,6 +2,7 @@
     "name": "nicolasbeauvais/lari18n",
     "description": "A live internationalisation edition tool for laravel",
     "keywords": ["laravel", "laravel4", "translation", "translate", "i18n", "live"],
+    "homepage": "https://github.com/nicolasbeauvais/lari18n",
     "authors": [
         {
             "name": "Nicolas Beauvais",

@@ -1,54 +1,27 @@
 <?php namespace Nicolasbeauvais\Lari18n;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\TranslationServiceProvider;
 
-class Lari18nServiceProvider extends ServiceProvider {
-
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
-
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
+/**
+ * Class Lari18nServiceProvider
+ * @package Nicolasbeauvais\Lari18n
+ */
+class Lari18nServiceProvider extends TranslationServiceProvider
+{
 	public function boot()
 	{
-		$this->package('nicolasbeauvais/lari18n');
-	}
-
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app['lari18n'] = $this->app->share(function($app)
+		$this->app->bindShared('translator', function($app)
 		{
-			return new Lari18n;
+			$loader = $app['translation.loader'];
+			$locale = $app['config']['app.locale'];
+
+			$trans = new Translator($loader, $locale);
+
+			$trans->setFallback($app['config']['app.fallback_locale']);
+
+			return $trans;
 		});
 
-		$this->app->booting(function()
-		{
-			$loader = AliasLoader::getInstance();
-			$loader->alias('lari18n', 'Nicolasbeauvais\Lari18n\Lari18nFacade');
-		});
+		parent::boot();
 	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('lari18n');
-	}
-
 }

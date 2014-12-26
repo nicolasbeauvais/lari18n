@@ -11,6 +11,6 @@ class Lari18n
 
     public function hello()
     {
-        dd('hello');
+        // @TODO
     }
 }
