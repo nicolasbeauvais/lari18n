@@ -1,0 +1,25 @@
+{
+    "name": "nicolasbeauvais/lari18n",
+    "description": "A live internationalisation edition tool for laravel",
+    "keywords": ["laravel", "laravel4", "translation", "translate", "i18n", "live"],
+    "authors": [
+        {
+            "name": "Nicolas Beauvais",
+            "email": "nicolasbeauvais1@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Nicolasbeauvais\\Lari18n\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
