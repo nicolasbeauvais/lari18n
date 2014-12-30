@@ -8,6 +8,8 @@
   - [X] Add a span with a specific class around the translated text
   - [X] Create a JavaScript script to highlight wanted translation and modify them from the browser
 - [X] Create a toolbar with translation advancement and language selection 
+- [ ] Create a command to start a new translation process
+- [ ] Make the toolbar form work to change translation files values
 - [ ] Create a configuration file to use permission for translation editing
 
 ## Instalation
