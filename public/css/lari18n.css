@@ -1,0 +1,11 @@
+#lari-toolbar {
+
+}
+
+.lari {
+    background-color: #4f94cc !important;
+    color: #ffffff !important;
+    position: relative;
+    z-index: 999 !important;
+    cursor: pointer;
+}
