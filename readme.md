@@ -4,10 +4,10 @@
 ## Development process
 
 - [X] Create a basic Package structure
-- [ ] Extend the Lang::get Laravel method from the package
-  - [ ] Add a span with a specific class around the translated text
-  - [ ] Create a JavaScript script to highlight wanted translation and modify them from the browser
-- [ ] Create a toolbar with translation advancement and language selection 
+- [X] Extend the Lang::get Laravel method from the package
+  - [X] Add a span with a specific class around the translated text
+  - [X] Create a JavaScript script to highlight wanted translation and modify them from the browser
+- [X] Create a toolbar with translation advancement and language selection 
 - [ ] Create a configuration file to use permission for translation editing
 
 ## Instalation
