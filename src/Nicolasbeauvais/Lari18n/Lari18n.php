@@ -30,6 +30,11 @@ class Lari18n
     private $instance;
 
     /**
+     * @var string
+     */
+    private $lang_key = "%lari18n-TODO%";
+
+    /**
      * @var array
      */
     private $languagesList = array();
@@ -63,7 +68,6 @@ class Lari18n
     {
         static $instance = null;
         if (null === $instance) {
-
             $instance = new Lari18n();
         }
 
@@ -73,16 +77,40 @@ class Lari18n
     /**
      * Wrap translated text with lai18n tags.
      *
-     * @param mixed $trans
+     * @param  mixed   $trans
+     * @param  string  $key
+     * @param  array   $replace
+     * @param  string  $locale
+     *
      * @return mixed
      */
-    public function wrap($trans)
+    public function wrap($trans, $key, $replace, $locale)
     {
         if (!is_string($trans)) {
             return $trans;
         }
 
-        return '<lari>' . $trans . '</lari>';
+        $attributes = array();
+
+        if (starts_with($trans, $this->lang_key)) {
+
+            $attributes['todo'] = true;
+            $trans = str_replace($this->lang_key, '', $trans);
+        }
+
+        if ($trans == $key) {
+            $attributes['missing'] = true;
+        }
+
+        $attributes['origin'] = addslashes(Lang::get($key, $replace, Config::get('app.fallback_locale'), false));
+        $attributes['key'] = $key;
+
+        // Build attributes
+        foreach ($attributes as $key => $attribute) {
+            $attributes[$key] = 'data-' . $key . '= "' . $attribute . '"';
+        }
+
+        return '<lari ' . implode($attributes, ' ') . '>' . $trans . '</lari>';
     }
 
     /**
@@ -163,12 +191,22 @@ class Lari18n
             $languagesData[$key] = array();
 
             foreach ($files as $fKey => $file) {
-                $fileName = str_replace(array('.php', '/', '\\'), array('', '.', '.'), $file->getRelativePathname());
+                $fileName = str_replace(array('.php', '\\'), array('', '/'), $file->getRelativePathname());
 
-                $languagesData[$key][$fileName] = Lang::get($fileName);
+                $languagesData[$key][$fileName] = Lang::get($fileName, array(), $key);
             }
 
-            $this->languagesProgress[$key] = count($languagesData[$key], COUNT_RECURSIVE);
+            $dot_array = array_dot($languagesData[$key]);
+            $count = count($dot_array);
+
+            foreach ($dot_array as $item) {
+
+                if (starts_with($item, $this->lang_key)) {
+                    $count--;
+                }
+            }
+
+            $this->languagesProgress[$key] = $count;
         }
 
         $this->languagesData = $languagesData;
@@ -192,8 +230,8 @@ class Lari18n
         $data['languagesData'] = $this->languagesData;
         $data['languagesProgress'] = $this->languagesProgress;
 
-        $data['perc'] = ($data['languagesProgress'][$data['locale']] * 100) /
-            $data['languagesProgress'][$data['fallback_locale']];
+        $data['perc'] = round(($data['languagesProgress'][$data['locale']] * 100) /
+            $data['languagesProgress'][$data['fallback_locale']]);
 
         return array('data' => $data);
     }
@@ -202,5 +240,65 @@ class Lari18n
     {
         $this->setLanguagesList();
         $this->setLanguagesData();
+    }
+
+    public function retrieveI18nData()
+    {
+        $this->makeI18nData();
+
+        $data = array();
+
+        $data['paths'] = $this->paths;
+        $data['languages'] = $this->languagesList;
+        $data['languagesData'] = $this->languagesData;
+        $data['languagesProgress'] = $this->languagesProgress;
+
+        return $data;
+    }
+
+    /**
+     * @param $files
+     * @param $locale
+     */
+    public function reinitialiseFiles($files, $locale)
+    {
+        foreach ($files as $file) {
+
+            $fileName = str_replace(array('.php', '\\'), array('', '/'), $file->getRelativePathname());
+            $translations = Lang::get($fileName, array(), $locale);
+
+            array_walk_recursive($translations, array($this, 'reinitialiseRecursiveWalk'));
+            File::put($file->getPathName(), '<?php' . "\r\n\r\n" . 'return ' . var_export($translations, true) . ';');
+        }
+    }
+
+    /**
+     * @param $item
+     * @param $key
+     */
+    private function reinitialiseRecursiveWalk(&$item, $key)
+    {
+        $item = $this->lang_key . $item;
+    }
+
+    /**
+     * @param $fallback_locale
+     * @param $locale
+     * @param $key
+     * @param $value
+     */
+    public function translate($fallback_locale, $locale, $key, $value)
+    {
+        $this->retrieveI18nData();
+
+        array_set($this->languagesData[$locale], $key, $value);
+
+        $filePath = explode('.', $key);
+
+        array_pop($filePath);
+
+        $file = $this->paths['lang'] . '/' . $locale . '/' . implode('/', $filePath) . '.php';
+
+        File::put($file, '<?php' . "\r\n\r\n" . 'return ' . var_export($this->languagesData[$locale][implode('.', $filePath)], true) . ';');
     }
 }

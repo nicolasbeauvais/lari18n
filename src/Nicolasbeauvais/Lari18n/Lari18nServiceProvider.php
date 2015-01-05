@@ -1,6 +1,7 @@
 <?php namespace Nicolasbeauvais\Lari18n;
 
 use Illuminate\Translation\TranslationServiceProvider;
+use Nicolasbeauvais\Lari18n\Commands\NewTranslation;
 
 /**
  * Class Lari18nServiceProvider
@@ -29,6 +30,13 @@ class Lari18nServiceProvider extends TranslationServiceProvider
 
 			return $trans;
 		});
+
+		$this->app->bind('lari18n::command.new.translation', function($app) {
+			return new NewTranslation();
+		});
+		$this->commands(array(
+			'lari18n::command.new.translation'
+		));
 
 		parent::boot();
 	}

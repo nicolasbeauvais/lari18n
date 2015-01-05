@@ -1,11 +1,154 @@
-#lari-toolbar {
-
+/* Lari18n tags */
+.lari18n {
+    border-bottom: 5px solid #2ccc35 !important;
+    background-color: #fff !important;
+    color: #2ccc35 !important;
+    cursor: pointer !important;
 }
 
-.lari {
-    background-color: #4f94cc !important;
-    color: #ffffff !important;
-    position: relative;
-    z-index: 999 !important;
+.lari18n.lari18n-todo {
+    border-bottom: 5px solid #cc3837 !important;
+    background-color: #fff !important;
+    color: #cc3837 !important;
+    cursor: pointer !important;
+}
+
+.lari18n.lari18n-missing {
+    border-bottom: 5px solid #f66e27 !important;
+    background-color: #fff !important;
+    color: #f66e27 !important;
+    cursor: pointer !important;
+}
+
+/* Lari18n toolbar */
+#lari-toolbar-info-toggle {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 45px !important;
+    height: 45px !important;
+    background-color: #2daebf !important;
+    color: #fff !important;
+    z-index: 100000 !important;
+    line-height: 45px !important;
+    text-align: center !important;
     cursor: pointer;
+}
+
+#lari-toolbar-info {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px 20px !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    background-color: #2daebf !important;
+    z-index: 100000 !important;
+    height: 45px !important;
+    line-height: 45px !important;
+}
+
+#lari-toolbar-info #lari-toolbar-info-hide {
+    float: right !important;
+    line-height: 45px !important;
+    margin-left: 30px !important;
+    font-weight: bold !important;
+    font-size: 20px !important;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+#lari-toolbar-info #lari-toolbar-info-documentation {
+    float: right !important;
+    line-height: 45px !important;
+    color: #fff !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+}
+
+#lari-toolbar-info #lari-toolbar-info-activated {
+    display: none;
+}
+
+#lari-toolbar-info .lari-toolbar-info-lang,
+#lari-toolbar-info .lari-toolbar-info-perc {
+    font-size: 20px;
+    line-height: 15px;
+    font-weight: bold;
+    margin: 0 3px;
+}
+
+/* Lari18n Overlay */
+#lari-overlay {
+    display: none;
+    position: absolute;
+    padding: 20px 50px;
+    left: 0;
+    right: 0;
+    background-color: #2daebf;
+    color: #fff;
+    z-index: 100000 !important;
+    text-align: center;
+}
+
+#lari-overlay-container {
+    width: 900px;
+    margin: auto;
+}
+
+#lari-overlay-container #lari-overlay-form label {
+    width: 440px  !important;
+    display: inline-block;
+}
+
+#lari-overlay-container #lari-overlay-form textarea {
+    max-width: 424px  !important;
+    min-width: 424px  !important;
+    font-family: sans-serif;
+    color: #fff;
+    padding: 10px;
+}
+
+#lari-overlay-container #lari-overlay-form #lari-overlay-form-origin {
+    background-color: rgba(51, 51, 51, 0.3);
+}
+
+#lari-overlay-container #lari-overlay-form #lari-overlay-form-translation {
+    background-color: rgba(51, 51, 51, 0.9);
+}
+
+#lari-overlay-container #lari-overlay-form {
+    cursor: default;
+}
+
+#lari-overlay-container #lari-overlay-form .lari-overlay-form-info {
+    font-size: 13px;
+}
+
+#lari-overlay #lari-overlay-hide {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    float: right !important;
+    font-weight: bold !important;
+    font-size: 20px !important;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+/* generic */
+
+#lari-toolbar-info .lari-button,
+#lari-overlay .lari-button{
+    background-color: #fff !important;
+    font-size: 16px !important;
+    padding: 5px 10px !important;
+    color: #2daebf !important;
+    font-weight: bold !important;
+    cursor: pointer;
+    border-radius: 3px !important;
+    border: none !important;
+    margin: 0 0 0 10px !important;
 }

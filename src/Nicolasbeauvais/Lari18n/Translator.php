@@ -37,11 +37,16 @@ class Translator extends LaravelTranslator
      * @param  string  $key
      * @param  array   $replace
      * @param  string  $locale
+     * @param  bool    $wrap
      *
      * @return string
      */
-    public function get($key, array $replace = array(), $locale = null)
+    public function get($key, array $replace = array(), $locale = null, $wrap = true)
     {
-        return $this->lari18n->wrap(parent::get($key, $replace, $locale));
+        if (!$wrap) {
+            return parent::get($key, $replace, $locale);
+        }
+
+        return $this->lari18n->wrap(parent::get($key, $replace, $locale), $key, $replace, $locale);
     }
 }
