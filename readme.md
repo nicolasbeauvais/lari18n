@@ -1,16 +1,17 @@
 # Lari18n (In development)
 > A live internationalisation edition tool for laravel
 
-## Development process
+## Missing key features
 
-- [X] Create a basic Package structure
-- [X] Extend the Lang::get Laravel method from the package
-  - [X] Add a span with a specific class around the translated text
-  - [X] Create a JavaScript script to highlight wanted translation and modify them from the browser
-- [X] Create a toolbar with translation advancement and language selection 
-- [ ] Create a command to start a new translation process
-- [ ] Make the toolbar form work to change translation files values
-- [ ] Create a configuration file to use permission for translation editing
+- [ ] Make it work with vars in translation string
+- [ ] Handle the Lang::choice method
+- [ ] More productivity with the Lari18n overlay
+  - [ ] Automatically go to the next string after a successful translation
+  - [ ] Show the current element differently
+- [ ] Use a filter to activate the plugin for admin / translator only
+- [ ] Handle new translation key added to a locale (translation upgrade)
+- [ ] Create a configuration file
+
 
 ## Instalation
 
@@ -21,6 +22,21 @@ To install Lari18n as a Composer package to be used with Laravel 4, simply add t
 ```
   "nicolasbeauvais/lari18n": "dev-master"
 ```
+
+### Publish
+
+To let your app use the front end ressource of Lari18n you need to publish them to your app using this artisan command for the assets
+
+```
+  php artisan asset:publish nicolasbeauvais/lari18n
+```
+
+and this command for the views
+
+```
+  php artisan view:publish nicolasbeauvais/lari18n
+```
+
 
 #### Setup
 
@@ -36,6 +52,17 @@ You should comment (or remove) the laravel translation service provider and use 
 ```
 Now, every time you use `trans()` or `Lang::get()` lari18n will be able to do some magic work.
 
+## Using Lari18n
+
+Lari18n help you to archieve a new translation process, for that you must use the native [laravel localization system](http://laravel.com/docs/4.2/localization), and your app base language (falback_locale) translation files must be filed.
+
+#### New Translation
+
+Lari18n is packed with a artisan command to help you in the translation process. This command create a new locale directory with all the translation files ready to be translated with Lari18n.
+
+```
+  php artisan lari18n:new [from_locale] [to_locale]
+```
 
 
 ## License
