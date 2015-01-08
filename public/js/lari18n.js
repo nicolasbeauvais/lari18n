@@ -19,15 +19,25 @@ Lari.init = function () {
     for (var i = 0; i < Lari.styles.length; i++) {
         Lari.loadStyle(Lari.styles[i]);
     }
+
+    // @DEBUG
+    Lari.activate();
 };
 
+/**
+ * Activate Lari18n.
+ */
 Lari.activate = function () {
     Lari.toolbar.activate();
     Lari.parse(true);
 };
 
+/**
+ * Desactivate Lari18n.
+ */
 Lari.desactivate = function () {
     Lari.toolbar.desactivate();
+    Lari.overlay.desactivate();
     Lari.parse(false);
 };
 
@@ -49,7 +59,7 @@ Lari.parse = function (isActivate) {
             $(this).addClass('lari18n');
             if ($(this).data('todo')) { $(this).addClass('lari18n-todo'); }
             if ($(this).data('missing')) { $(this).addClass('lari18n-missing'); }
-            $(this).bind('click.lari', Lari.translate);
+            $(this).bind('click.lari', Lari.overlay.translate);
 
         } else {
 
@@ -57,53 +67,10 @@ Lari.parse = function (isActivate) {
             $(this).removeClass('lari18n-todo');
             $(this).removeClass('lari18n-missing');
 
-            $(this).unbind('click.lari', Lari.translate);
+            $(this).unbind('click.lari', Lari.overlay.translate);
         }
 
     });
-};
-
-Lari.translate = function (e) {
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    Lari.$current = $(this);
-
-    $('#lari-overlay').show();
-
-    var top = $(this).offset().top;
-    if (top > $('#lari-overlay').outerHeight() + 100) {
-        top = top - $('#lari-overlay').outerHeight() - 30;
-    } else {
-        top += $(this).outerHeight() + 30;
-    }
-
-    $('#lari-overlay').css({top: top});
-
-    $('#lari-overlay-form-origin').val($(this).data('origin'));
-};
-
-Lari.sendTranslate = function (e) {
-
-    if (e.keyCode == 13) {
-
-        if (!Lari.$current) { return false; }
-
-        e.preventDefault();
-
-        var data = Lari.data;
-
-        data.key = Lari.$current.data('key');
-        data.value = $(this).val();
-
-        $.post('/lari18n/translate', data);
-
-        // Update the changed tag
-        Lari.$current.removeClass('lari18n-missing lari18n-todo').text($(this).val());
-
-        return false;
-    }
 };
 
 /**
@@ -207,14 +174,122 @@ Lari.overlay.$current = null;
  */
 Lari.overlay.init = function () {
     $('#lari-overlay-hide').bind('click.lari', Lari.overlay.hide);
-    $('#lari-overlay-form-translation').on("keypress", Lari.sendTranslate);
+    $('#lari-overlay-form-translation').bind("keypress", Lari.overlay.sendTranslate);
 };
 
+/**
+ * Send a translation to the backend.
+ *
+ * @param e
+ *
+ * @returns {boolean}
+ */
+Lari.overlay.sendTranslate = function (e) {
 
+    if (e.keyCode == 13) {
+
+        if (!Lari.overlay.$current) { return false; }
+
+        e.preventDefault();
+
+        var data = Lari.data;
+
+        data.key = Lari.overlay.$current.data('key');
+        data.value = $(this).val();
+
+        $.post('/lari18n/translate', data);
+
+        // Update the changed tag
+        var text = $(this).val();
+
+        var replace = Lari.overlay.$current.data('replace');
+        replace = replace.split(',');
+
+        for (var i = 0; i < replace.length; i++) {
+            var items = replace[i];
+
+            if (!items) { continue; }
+
+            items = items.split(':');
+
+            text = text.replace(new RegExp('\:' + items[0], 'g'), items[1]);
+        }
+
+        Lari.overlay.$current.removeClass('lari18n-missing lari18n-todo').text(text);
+
+        return false;
+    }
+};
+
+/**
+ * Start a translation process in the overlay.
+ *
+ * @param e
+ */
+Lari.overlay.translate = function (e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    Lari.overlay.$current = $(this);
+
+    // @TODO: put that in a overlay translate init method
+    $('#lari-overlay-replace').find('.lari-overlay-replace').remove();
+    $('#lari-overlay-replace').addClass('hide');
+
+    $('#lari-overlay').show();
+
+    var top = $(this).offset().top;
+    if (top > $('#lari-overlay').outerHeight() + 100) {
+        top = top - $('#lari-overlay').outerHeight() - 30;
+    } else {
+        top += $(this).outerHeight() + 30;
+    }
+
+    $('#lari-overlay').css({top: top});
+
+    // Replace vars
+    var replace = $(this).data('replace');
+
+    var replace = Lari.overlay.$current.data('replace');
+    replace = replace.split(',');
+
+    if (replace) {
+        $('#lari-overlay-replace').removeClass('hide');
+    }
+
+    for (var i = 0; i < replace.length; i++) {
+        var items = replace[i];
+
+        if (!items) { continue; }
+
+        items = items.split(':');
+
+        $('#lari-overlay-replace').append('<span class="lari-overlay-replace">:' + items[0]+ ' => ' + items[1] + '</span>');
+    }
+
+
+    $('#lari-overlay-form-origin').val($(this).data('origin'));
+};
+
+/**
+ * Hide the overlay.
+ */
 Lari.overlay.hide = function () {
-    Lari.$current = null;
+    Lari.overlay.$current = null;
     $('#lari-overlay').hide();
 };
+
+/**
+ * Desactivate the overlay.
+ */
+Lari.overlay.desactivate = function () {
+    Lari.overlay.hide();
+    $('#lari-overlay-hide').unbind('click.lari', Lari.overlay.hide);
+    $('#lari-overlay-form-translation').unbind("keypress", Lari.overlay.sendTranslate);
+};
+
+
 
 /**
  * ====================
@@ -222,4 +297,3 @@ Lari.overlay.hide = function () {
  * ====================
  */
 $(document).ready(Lari.init);
-

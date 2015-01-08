@@ -30,6 +30,8 @@
             x
         </div>
 
+        <div id="lari-overlay-replace" class="hide">Keys:</div>
+
         <form id="lari-overlay-form" action="/lari18n">
             <label for="lari-overlay-form-origin">Original (Fallback locale)</label>
             <label for="lari-overlay-form-translation">Translation ({{ $data['locale'] }})</label>

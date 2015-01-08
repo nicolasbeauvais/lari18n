@@ -102,6 +102,15 @@ class Lari18n
             $attributes['missing'] = true;
         }
 
+        if (!empty($replace)) {
+
+            $attributes['replace'] = '';
+
+            foreach ($replace as $keyR => $valueR) {
+                $attributes['replace'] .= $keyR . ':' . $valueR . ',';
+            }
+        }
+
         $attributes['origin'] = addslashes(Lang::get($key, $replace, Config::get('app.fallback_locale'), false));
         $attributes['key'] = $key;
 
@@ -286,6 +295,8 @@ class Lari18n
      * @param $locale
      * @param $key
      * @param $value
+     *
+     * @return string
      */
     public function translate($fallback_locale, $locale, $key, $value)
     {

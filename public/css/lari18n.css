@@ -30,7 +30,7 @@
     height: 45px !important;
     background-color: #2daebf !important;
     color: #fff !important;
-    z-index: 100000 !important;
+    z-index: 100001 !important;
     line-height: 45px !important;
     text-align: center !important;
     cursor: pointer;
@@ -96,6 +96,22 @@
 #lari-overlay-container {
     width: 900px;
     margin: auto;
+}
+
+#lari-overlay-container #lari-overlay-replace.hide {
+    display: none;
+}
+
+#lari-overlay-container #lari-overlay-replace {
+    padding: 0 0 20px;
+}
+
+#lari-overlay-container .lari-overlay-replace {
+    background-color: #6BB2BB;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-left: 5px;
 }
 
 #lari-overlay-container #lari-overlay-form label {
