@@ -75,7 +75,7 @@ class Lari18n
     }
 
     /**
-     * Wrap translated text with lai18n tags.
+     * Wrap translated text with lari18n tags.
      *
      * @param  mixed   $trans
      * @param  string  $key
@@ -84,8 +84,9 @@ class Lari18n
      *
      * @return mixed
      */
-    public function wrap($trans, $key, $replace, $locale)
+    public function wrap($trans, $key, $replace, $locale, $number = null)
     {
+
         if (!is_string($trans)) {
             return $trans;
         }
@@ -113,6 +114,10 @@ class Lari18n
 
         $attributes['origin'] = addslashes(Lang::get($key, $replace, Config::get('app.fallback_locale'), false));
         $attributes['key'] = $key;
+
+        if ($number) {
+            $attributes['number'] = $number;
+        }
 
         // Build attributes
         foreach ($attributes as $key => $attribute) {
@@ -311,5 +316,22 @@ class Lari18n
         $file = $this->paths['lang'] . '/' . $locale . '/' . implode('/', $filePath) . '.php';
 
         File::put($file, '<?php' . "\r\n\r\n" . 'return ' . var_export($this->languagesData[$locale][implode('.', $filePath)], true) . ';');
+    }
+
+    /**
+     * @param $fallback_locale
+     * @param $locale
+     * @param $key
+     * @param $value
+     * @param $number
+     * @param $replace
+     *
+     * @return string
+     */
+    public function translateChoice($fallback_locale, $locale, $key, $value, $number, $replace = array())
+    {
+        $this->translate($fallback_locale, $locale, $key, $value);
+
+        echo trans_choice($key, $number, $replace);
     }
 }

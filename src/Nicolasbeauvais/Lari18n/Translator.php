@@ -49,4 +49,24 @@ class Translator extends LaravelTranslator
 
         return $this->lari18n->wrap(parent::get($key, $replace, $locale), $key, $replace, $locale);
     }
+
+    /**
+     * Get a translation according to an integer value.
+     *
+     * @param  string  $key
+     * @param  int     $number
+     * @param  array   $replace
+     * @param  string  $locale
+     * @return string
+     */
+    public function choice($key, $number, array $replace = array(), $locale = null)
+    {
+        $line = $this->get($key, $replace, $locale = $locale ?: $this->locale, false);
+
+        $replace['count'] = $number;
+
+        $choosed = $this->makeReplacements($this->getSelector()->choose($line, $number, $locale), $replace);
+
+        return $this->lari18n->wrap($choosed, $key, $replace, $locale, $number);
+    }
 }

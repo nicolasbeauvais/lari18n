@@ -35,8 +35,24 @@ class Lari18nController extends Controller
 
     public function postTranslate()
     {
-        $respone = $this->lari18n->translate(Input::get('fallback_locale'), Input::get('locale'), Input::get('key'), Input::get('value'));
+        $respone = $this->lari18n->translate(
+            Input::get('fallback_locale'),
+            Input::get('locale'),
+            Input::get('key'),
+            Input::get('value')
+        );
+    }
 
+    public function postTranslateChoice()
+    {
+        $respone = $this->lari18n->translateChoice(
+            Input::get('fallback_locale'),
+            Input::get('locale'),
+            Input::get('key'),
+            Input::get('value'),
+            Input::get('number'),
+            Input::get('replace')
+        );
     }
 }
 
