@@ -3,7 +3,7 @@
 
 ## Missing key features
 
-- [ ] Make it work with vars in translation string
+- [X] Make it work with vars in translation string
 - [ ] Handle the Lang::choice method
 - [ ] More productivity with the Lari18n overlay
   - [ ] Automatically go to the next string after a successful translation
