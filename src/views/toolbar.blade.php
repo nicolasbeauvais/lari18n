@@ -35,7 +35,7 @@
         <form id="lari-overlay-form" action="/lari18n">
             <label for="lari-overlay-form-origin">Original (Fallback locale)</label>
             <label for="lari-overlay-form-translation">Translation ({{ $data['locale'] }})</label>
-            <textarea name="lari-overlay-form-origin" id="lari-overlay-form-origin" disabled></textarea>
+            <textarea name="lari-overlay-form-origin" id="lari-overlay-form-origin"></textarea>
             <textarea name="lari-overlay-form-translation" id="lari-overlay-form-translation" ></textarea>
             <p class="lari-overlay-form-info">
                 (Press enter to automatically send the translation.)

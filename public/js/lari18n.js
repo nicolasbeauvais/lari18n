@@ -169,12 +169,18 @@ Lari.overlay = {};
 // Contain the DOM element currently edited by the overlay
 Lari.overlay.$current = null;
 
+// Contain textareas DOM elements
+Lari.overlay.$textareas = null;
+
 /**
  * Init the overlay
  */
 Lari.overlay.init = function () {
     $('#lari-overlay-hide').bind('click.lari', Lari.overlay.hide);
-    $('#lari-overlay-form-translation').bind("keypress", Lari.overlay.sendTranslate);
+    $('#lari-overlay-form-translation').bind('keypress.lari', Lari.overlay.sendTranslate);
+    $('#lari-overlay-form-origin').on('mousedown', Lari.overlay.textareaDisabled);
+    Lari.overlay.$textareas = $('#lari-overlay').find('textarea');
+    Lari.overlay.$textareas.bind('mouseup.lari mousemove.lari', Lari.overlay.textareaResize);
 };
 
 /**
@@ -222,6 +228,22 @@ Lari.overlay.sendTranslate = function (e) {
 };
 
 /**
+ * Simulate a disabled textarea.
+ *
+ * @returns {boolean}
+ */
+Lari.overlay.textareaDisabled = function () {
+    return false;
+};
+
+/**
+ * Resize all the textareas with the same height on height change.
+ */
+Lari.overlay.textareaResize = function () {
+    Lari.overlay.$textareas.css({height: $(this).height() + 'px'})
+};
+
+/**
  * Start a translation process in the overlay.
  *
  * @param e
@@ -252,20 +274,20 @@ Lari.overlay.translate = function (e) {
     var replace = $(this).data('replace');
 
     var replace = Lari.overlay.$current.data('replace');
-    replace = replace.split(',');
 
     if (replace) {
+        replace = replace.split(',');
         $('#lari-overlay-replace').removeClass('hide');
-    }
 
-    for (var i = 0; i < replace.length; i++) {
-        var items = replace[i];
+        for (var i = 0; i < replace.length; i++) {
+            var items = replace[i];
 
-        if (!items) { continue; }
+            if (!items) { continue; }
 
-        items = items.split(':');
+            items = items.split(':');
 
-        $('#lari-overlay-replace').append('<span class="lari-overlay-replace">:' + items[0]+ ' => ' + items[1] + '</span>');
+            $('#lari-overlay-replace').append('<span class="lari-overlay-replace">:' + items[0]+ ' => ' + items[1] + '</span>');
+        }
     }
 
 
@@ -284,9 +306,12 @@ Lari.overlay.hide = function () {
  * Desactivate the overlay.
  */
 Lari.overlay.desactivate = function () {
+
     Lari.overlay.hide();
+
     $('#lari-overlay-hide').unbind('click.lari', Lari.overlay.hide);
-    $('#lari-overlay-form-translation').unbind("keypress", Lari.overlay.sendTranslate);
+    $('#lari-overlay-form-translation').unbind('keypress.lari', Lari.overlay.sendTranslate);
+    $('#lari-overlay').find('textarea').unbind('mouseup.lari', Lari.overlay.textareaResize);
 };
 
 
