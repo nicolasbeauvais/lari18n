@@ -57,9 +57,11 @@ class Translator extends LaravelTranslator
      * @param  int     $number
      * @param  array   $replace
      * @param  string  $locale
+     * @param  bool    $wrap
+     *
      * @return string
      */
-    public function choice($key, $number, array $replace = array(), $locale = null)
+    public function choice($key, $number, array $replace = array(), $locale = null, $wrap = true)
     {
         $line = $this->get($key, $replace, $locale = $locale ?: $this->locale, false);
 
@@ -67,6 +69,10 @@ class Translator extends LaravelTranslator
 
         $choosed = $this->makeReplacements($this->getSelector()->choose($line, $number, $locale), $replace);
 
-        return $this->lari18n->wrap($choosed, $key, $replace, $locale, $number);
+        if ($wrap == false) {
+            return $choosed;
+        } else {
+            return $this->lari18n->wrap($choosed, $key, $replace, $locale, $number, $wrap);
+        }
     }
 }

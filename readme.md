@@ -4,7 +4,7 @@
 ## Missing key features
 
 - [X] Make it work with vars in translation string
-- [ ] Handle the Lang::choice method
+- [X] Handle the Lang::choice method
 - [ ] More productivity with the Lari18n overlay
   - [ ] Automatically go to the next string after a successful translation
   - [ ] Show the current element differently

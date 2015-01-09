@@ -31,6 +31,8 @@ class Lari18nServiceProvider extends TranslationServiceProvider
 			return $trans;
 		});
 
+		Lari18n::getInstance()->setTranslator($this->app['translator']);
+
 		$this->app->bind('lari18n::command.new.translation', function($app) {
 			return new NewTranslation();
 		});

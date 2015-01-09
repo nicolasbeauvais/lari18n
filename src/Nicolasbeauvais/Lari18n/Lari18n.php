@@ -20,6 +20,11 @@ class Lari18n
     private $app;
 
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
      * @var array
      */
     private $paths= array();
@@ -72,6 +77,14 @@ class Lari18n
         }
 
         return $instance;
+    }
+
+    /**
+     * @param Translator $translator
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->translator = $translator;
     }
 
     /**
@@ -296,6 +309,8 @@ class Lari18n
     }
 
     /**
+     * Put the new translation value in the corresponding localisation file.
+     *
      * @param $fallback_locale
      * @param $locale
      * @param $key
@@ -319,6 +334,8 @@ class Lari18n
     }
 
     /**
+     * Put the new choice type translation value in the corresponding localisation file.
+     *
      * @param $fallback_locale
      * @param $locale
      * @param $key
@@ -328,10 +345,12 @@ class Lari18n
      *
      * @return string
      */
-    public function translateChoice($fallback_locale, $locale, $key, $value, $number, $replace = array())
+    public function translateChoice($fallback_locale, $locale, $key, $value, $number, $replace)
     {
         $this->translate($fallback_locale, $locale, $key, $value);
 
-        echo trans_choice($key, $number, $replace);
+        $replace = $replace ?: array();
+
+        echo $this->translator->choice($key, $number, $replace, $locale, false);
     }
 }
