@@ -56,6 +56,11 @@ Lari.parse = function (isActivate) {
 
         if (isActivate) {
 
+            if ($(this).text().length == 0) {
+                $(this).addClass('lari18n-empty');
+                $(this).text('%empty-value%')
+            }
+
             $(this).addClass('lari18n');
             if ($(this).data('todo')) { $(this).addClass('lari18n-todo'); }
             if ($(this).data('missing')) { $(this).addClass('lari18n-missing'); }
@@ -63,9 +68,15 @@ Lari.parse = function (isActivate) {
 
         } else {
 
+            if ($(this).hasClass('lari18n-empty')) {
+                $(this).text('');
+            }
+
             $(this).removeClass('lari18n');
             $(this).removeClass('lari18n-todo');
             $(this).removeClass('lari18n-missing');
+            $(this).removeClass('lari18n-empty');
+
 
             $(this).unbind('click.lari', Lari.overlay.translate);
         }
@@ -169,18 +180,12 @@ Lari.overlay = {};
 // Contain the DOM element currently edited by the overlay
 Lari.overlay.$current = null;
 
-// Contain textareas DOM elements
-Lari.overlay.$textareas = null;
-
 /**
  * Init the overlay
  */
 Lari.overlay.init = function () {
     $('#lari-overlay-hide').bind('click.lari', Lari.overlay.hide);
     $('#lari-overlay-form-translation').bind('keypress.lari', Lari.overlay.sendTranslate);
-    $('#lari-overlay-form-origin').on('mousedown', Lari.overlay.textareaDisabled);
-    Lari.overlay.$textareas = $('#lari-overlay').find('textarea');
-    Lari.overlay.$textareas.bind('mouseup.lari mousemove.lari', Lari.overlay.textareaResize);
 };
 
 /**
@@ -196,12 +201,41 @@ Lari.overlay.sendTranslate = function (e) {
 
         if (!Lari.overlay.$current) { return false; }
 
+        if ($(this).val().length == 0 && !confirm('Are you sure to translate this to an empty value ?')) {
+            return false;
+        }
+
         e.preventDefault();
 
         var data = Lari.data;
 
         data.key = Lari.overlay.$current.data('key');
         data.value = $(this).val();
+        data.number = Lari.overlay.$current.data('number');
+
+        // Choice translation case
+        if (!isNaN(data.number)) {
+            var replace = Lari.overlay.$current.data('replace');
+
+            if (replace) {
+                replace = replace.split(',');
+                data.replace = [];
+                for (var i = 0; i < replace.length; i++) {
+                    var items = replace[i];
+
+                    if (!items) {
+                        continue;
+                    }
+
+                    items = items.split(':');
+                    data.replace[items[0]] = items[1];
+                }
+            }
+
+            $.post('/lari18n/translate-choice', data).success(Lari.overlay.callbackChoice);
+
+            return;
+        }
 
         $.post('/lari18n/translate', data);
 
@@ -209,38 +243,33 @@ Lari.overlay.sendTranslate = function (e) {
         var text = $(this).val();
 
         var replace = Lari.overlay.$current.data('replace');
-        replace = replace.split(',');
 
-        for (var i = 0; i < replace.length; i++) {
-            var items = replace[i];
+        if (replace) {
+            replace = replace.split(',');
 
-            if (!items) { continue; }
+            for (var i = 0; i < replace.length; i++) {
+                var items = replace[i];
 
-            items = items.split(':');
+                if (!items) {
+                    continue;
+                }
 
-            text = text.replace(new RegExp('\:' + items[0], 'g'), items[1]);
+                items = items.split(':');
+
+                text = text.replace(new RegExp('\:' + items[0], 'g'), items[1]);
+            }
         }
 
         Lari.overlay.$current.removeClass('lari18n-missing lari18n-todo').text(text);
+
+        $('.lari18n-missing:first,.lari18n-todo:first').click();
 
         return false;
     }
 };
 
-/**
- * Simulate a disabled textarea.
- *
- * @returns {boolean}
- */
-Lari.overlay.textareaDisabled = function () {
-    return false;
-};
-
-/**
- * Resize all the textareas with the same height on height change.
- */
-Lari.overlay.textareaResize = function () {
-    Lari.overlay.$textareas.css({height: $(this).height() + 'px'})
+Lari.overlay.callbackChoice = function (data) {
+    Lari.overlay.$current.text(data);
 };
 
 /**
@@ -254,16 +283,19 @@ Lari.overlay.translate = function (e) {
     e.stopPropagation();
 
     Lari.overlay.$current = $(this);
+    $('.lari18n-selected').removeClass('lari18n-selected');
+    Lari.overlay.$current.addClass('lari18n-selected');
 
     // @TODO: put that in a overlay translate init method
     $('#lari-overlay-replace').find('.lari-overlay-replace').remove();
     $('#lari-overlay-replace').addClass('hide');
-
     $('#lari-overlay').show();
+    $('#lari-overlay-form-translation').val('');
 
-    var top = $(this).offset().top;
-    if (top > $('#lari-overlay').outerHeight() + 100) {
-        top = top - $('#lari-overlay').outerHeight() - 30;
+    var top = $(this).offset().top + 65;
+
+    if (top > $('#lari-overlay').outerHeight() + 150) {
+        top = top - $('#lari-overlay').outerHeight() - 100;
     } else {
         top += $(this).outerHeight() + 30;
     }
@@ -311,7 +343,6 @@ Lari.overlay.desactivate = function () {
 
     $('#lari-overlay-hide').unbind('click.lari', Lari.overlay.hide);
     $('#lari-overlay-form-translation').unbind('keypress.lari', Lari.overlay.sendTranslate);
-    $('#lari-overlay').find('textarea').unbind('mouseup.lari', Lari.overlay.textareaResize);
 };
 
 
