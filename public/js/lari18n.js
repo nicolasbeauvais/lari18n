@@ -19,9 +19,6 @@ Lari.init = function () {
     for (var i = 0; i < Lari.styles.length; i++) {
         Lari.loadStyle(Lari.styles[i]);
     }
-
-    // @DEBUG
-    Lari.activate();
 };
 
 /**
