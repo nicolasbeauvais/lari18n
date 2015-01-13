@@ -8,7 +8,7 @@
 - [ ] More productivity with the Lari18n overlay
   - [X] Automatically go to the next item after a successful translation
   - [X] Show the current element differently
-- [ ] Use a filter to activate the plugin for admin / translator only
+- [X] Use a filter to activate the plugin for admin / translator only
 - [ ] Handle new translation key added to a locale (translation upgrade)
 - [ ] Create a configuration file
 
