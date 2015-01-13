@@ -2,10 +2,10 @@
 
 namespace Nicolasbeauvais\Lari18n;
 
+use Config;
+use File;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
+use Lang;
 
 /**
  * Class Lari18n
@@ -55,6 +55,11 @@ class Lari18n
     private $languagesProgress = array();
 
     /**
+     * @var bool
+     */
+    private static $activated = false;
+
+    /**
      * Construct.
      */
     private function __construct()
@@ -94,6 +99,7 @@ class Lari18n
      * @param  string  $key
      * @param  array   $replace
      * @param  string  $locale
+     * @param  int     $number
      *
      * @return mixed
      */
@@ -352,5 +358,18 @@ class Lari18n
         $replace = $replace ?: array();
 
         echo $this->translator->choice($key, $number, $replace, $locale, false);
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function isActivated()
+    {
+        return self::$activated;
+    }
+
+    public static function activate()
+    {
+        self::$activated = true;
     }
 }

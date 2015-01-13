@@ -12,7 +12,6 @@
 - [ ] Handle new translation key added to a locale (translation upgrade)
 - [ ] Create a configuration file
 
-
 ## Instalation
 
 #### Composer
@@ -55,6 +54,11 @@ Now, every time you use `trans()` or `Lang::get()` lari18n will be able to do so
 ## Using Lari18n
 
 Lari18n help you to archieve a new translation process, for that you must use the native [laravel localization system](http://laravel.com/docs/4.2/localization), and your app base language (falback_locale) translation files must be filed.
+
+To activate Lari18n you can use the activate method. For example in a filter for a specific role of your application.
+```php
+\Nicolasbeauvais\Lari18n\Lari18n::activate();
+```
 
 #### New Translation
 

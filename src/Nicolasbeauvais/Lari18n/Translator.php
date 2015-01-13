@@ -43,7 +43,7 @@ class Translator extends LaravelTranslator
      */
     public function get($key, array $replace = array(), $locale = null, $wrap = true)
     {
-        if (!$wrap) {
+        if (!Lari18n::isActivated() || !$wrap) {
             return parent::get($key, $replace, $locale);
         }
 
@@ -63,6 +63,10 @@ class Translator extends LaravelTranslator
      */
     public function choice($key, $number, array $replace = array(), $locale = null, $wrap = true)
     {
+        if (!Lari18n::isActivated()) {
+            return parent::choice($key, $number, $replace, $locale);
+        }
+
         $line = $this->get($key, $replace, $locale = $locale ?: $this->locale, false);
 
         $replace['count'] = $number;

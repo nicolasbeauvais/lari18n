@@ -51,7 +51,10 @@ class Lari18nServiceProvider extends TranslationServiceProvider
 		});
 
 		$this->app['router']->after(function ($request, $response) {
-			$this->app['lari18n']->modifyResponse($request, $response);
+
+			if (Lari18n::isActivated()) {
+				$this->app['lari18n']->modifyResponse($request, $response);
+			}
 		});
 
 		parent::register();
