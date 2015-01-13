@@ -5,7 +5,7 @@
 
 - [X] Make it work with vars in translation string
 - [X] Handle the Lang::choice method
-- [ ] More productivity with the Lari18n overlay
+- [X] More productivity with the Lari18n overlay
   - [X] Automatically go to the next item after a successful translation
   - [X] Show the current element differently
 - [X] Use a filter to activate the plugin for admin / translator only
