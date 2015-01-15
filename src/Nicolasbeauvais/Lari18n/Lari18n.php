@@ -127,7 +127,7 @@ class Lari18n
         $attributes['locale'] = $locale;
 
         // For choice type translation we also store the given number
-        $attributes['number'] = $number ?: false;
+        $attributes['number'] = $number ?: null;
 
         // Add replace key/value to the tag's attributes
         $attributes['replace'] = '';
