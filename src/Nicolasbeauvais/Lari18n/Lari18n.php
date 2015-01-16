@@ -37,7 +37,7 @@ class Lari18n
     /**
      * @var string
      */
-    private $lang_key = "%lari18n-TODO%";
+    private $todo_translation_key;
 
     /**
      * @var array
@@ -115,10 +115,10 @@ class Lari18n
         $attributes = [];
 
         // If the translation start with the Lari18n key, it's a new one
-        $attributes['todo'] = starts_with($trans, $this->lang_key);
+        $attributes['todo'] = starts_with($trans, $this->todo_translation_key);
 
         // Remove the special Lari18n key of the translation
-        $trans = str_replace($this->lang_key, '', $trans);
+        $trans = str_replace($this->todo_translation_key, '', $trans);
 
         // If the translation is the key, the translation is missing
         $attributes['missing'] = $trans == $key;
@@ -238,7 +238,7 @@ class Lari18n
 
             // count the number of translated element in each file
             foreach ($dot_array as $item) {
-                if (starts_with($item, $this->lang_key)) {
+                if (starts_with($item, $this->todo_translation_key)) {
                     $count--;
                 }
             }
@@ -330,7 +330,7 @@ class Lari18n
      */
     private function reinitialiseRecursiveWalk(&$item, $key)
     {
-        $item = $this->lang_key . $item;
+        $item = $this->todo_translation_key . $item;
     }
 
     /**
