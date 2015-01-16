@@ -40,7 +40,7 @@
         <span class="lari-toolbar-info-lang">[{{ ucfirst($data['locale']) }}]</span>
         languages, and completed
         <span class="lari-toolbar-info-perc">{{ $data['perc'] }}%</span>
-        of this page translations
+        of this locale translations
 
         <button id="lari-toolbar-info-desactivate" class="lari-button">Desactivate</button>
     </span>
