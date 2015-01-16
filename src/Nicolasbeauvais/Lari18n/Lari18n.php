@@ -69,6 +69,7 @@ class Lari18n
             'js' => asset('packages/nicolasbeauvais/lari18n/js') . '/',
             'lang' => app_path() . '/lang'
         ];
+        $this->todo_translation_key = Config::get('lari18n::todo_translation_key');
     }
 
     /**
