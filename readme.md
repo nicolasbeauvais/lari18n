@@ -31,11 +31,18 @@ To let your app use the front end ressource of Lari18n you need to publish them 
   php artisan asset:publish nicolasbeauvais/lari18n
 ```
 
-and this command for the views
+use this command for the views
 
 ```
   php artisan view:publish nicolasbeauvais/lari18n
 ```
+
+and this command for the configuration file
+
+```
+  php artisan config:publish nicolasbeauvais/lari18n
+```
+
 
 
 #### Setup
