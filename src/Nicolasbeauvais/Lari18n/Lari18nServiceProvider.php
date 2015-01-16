@@ -2,6 +2,7 @@
 
 use Illuminate\Translation\TranslationServiceProvider;
 use Nicolasbeauvais\Lari18n\Commands\NewTranslation;
+use Nicolasbeauvais\Lari18n\Commands\UpdateTranslation;
 
 /**
  * Class Lari18nServiceProvider
@@ -33,11 +34,17 @@ class Lari18nServiceProvider extends TranslationServiceProvider
 
 		Lari18n::getInstance()->setTranslator($this->app['translator']);
 
+		// Provide commands
 		$this->app->bind('lari18n::command.new.translation', function($app) {
 			return new NewTranslation();
 		});
+		$this->app->bind('lari18n::command.update.translation', function($app) {
+			return new UpdateTranslation();
+		});
+
 		$this->commands(array(
-			'lari18n::command.new.translation'
+			'lari18n::command.new.translation',
+			'lari18n::command.update.translation'
 		));
 
 		parent::boot();
