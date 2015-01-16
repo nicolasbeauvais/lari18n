@@ -44,9 +44,6 @@ class NewTranslation extends Command
 	 */
 	public function fire()
 	{
-		// @DEBUG
-		File::deleteDirectory('C:\wamp\www\Dropbox\lari18n\app/lang/fr');
-
 		$from = $this->argument('from_locale');
 		$to = $this->argument('to_locale');
 
