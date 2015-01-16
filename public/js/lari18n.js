@@ -211,7 +211,7 @@ Lari.overlay.sendTranslate = function (e) {
         data.number = Lari.overlay.$current.data('number');
 
         // Choice translation case
-        if (!isNaN(data.number)) {
+        if (data.number) {
             var replace = Lari.overlay.$current.data('replace');
 
             if (replace) {
@@ -267,6 +267,7 @@ Lari.overlay.sendTranslate = function (e) {
 
 Lari.overlay.callbackChoice = function (data) {
     Lari.overlay.$current.text(data);
+    $('.lari18n-missing:first,.lari18n-todo:first').click();
 };
 
 /**
