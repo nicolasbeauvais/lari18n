@@ -10,7 +10,7 @@
   - [X] Show the current element differently
 - [X] Use a filter to activate the plugin for admin / translator only
 - [ ] Handle new translation key added to a locale (translation upgrade)
-- [ ] Create a configuration file
+- [X] Create a configuration file
 
 ## Instalation
 
