@@ -1,29 +1,7 @@
 /* Lari18n tags */
 .lari18n {
-    border-bottom: 5px solid #2ccc35 !important;
+    border-bottom: 5px solid !important;
     background-color: #fff !important;
-    color: #2ccc35 !important;
-    cursor: pointer !important;
-}
-
-.lari18n.lari18n-missing {
-    border-bottom: 5px solid #f66e27 !important;
-    background-color: #fff !important;
-    color: #f66e27 !important;
-    cursor: pointer !important;
-}
-
-.lari18n.lari18n-todo {
-    border-bottom: 5px solid #cc3837 !important;
-    background-color: #fff !important;
-    color: #cc3837 !important;
-    cursor: pointer !important;
-}
-
-.lari18n.lari18n-selected {
-    border-bottom: 5px solid #000 !important;
-    background-color: #fff !important;
-    color: #000 !important;
     cursor: pointer !important;
 }
 
