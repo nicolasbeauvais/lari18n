@@ -1,4 +1,31 @@
+<style>
+    .lari18n {
+        border-color: {{ Config::get('lari18n::color-done.border') }} !important;
+        background-color: {{ Config::get('lari18n::color-done.background') }} !important;
+        color: {{ Config::get('lari18n::color-done.color') }} !important;
+    }
+
+    .lari18n.lari18n-missing {
+        border-color: {{ Config::get('lari18n::color-missing.border') }} !important;
+        background-color: {{ Config::get('lari18n::color-missing.background') }} !important;
+        color: {{ Config::get('lari18n::color-missing.color') }} !important;
+    }
+
+    .lari18n.lari18n-todo {
+        border-color: {{ Config::get('lari18n::color-todo.border') }} !important;
+        background-color: {{ Config::get('lari18n::color-todo.background') }} !important;
+        color: {{ Config::get('lari18n::color-todo.color') }} !important;
+    }
+
+    .lari18n.lari18n-selected {
+        border-color: {{ Config::get('lari18n::color-selected.border') }} !important;
+        background-color: {{ Config::get('lari18n::color-selected.background') }} !important;
+        color: {{ Config::get('lari18n::color-selected.color') }} !important;
+    }
+</style>
+
 <div id="lari-toolbar-info-toggle">L</div>
+
 <div id="lari-toolbar-info" data-fallback_locale="{{ $data['fallback_locale'] }}" data-locale="{{ $data['locale'] }}">
 
     <span id="lari-toolbar-info-desactivated">
