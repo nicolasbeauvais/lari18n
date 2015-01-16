@@ -9,8 +9,9 @@
   - [X] Automatically go to the next item after a successful translation
   - [X] Show the current element differently
 - [X] Use a filter to activate the plugin for admin / translator only
-- [ ] Handle new translation key added to a locale (translation upgrade)
 - [X] Create a configuration file
+- [ ] Handle new translation key added to a locale (translation upgrade)
+- [ ] Create a command to automatically update localisation file on watched files change
 
 ## Instalation
 
