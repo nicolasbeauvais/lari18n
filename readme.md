@@ -10,7 +10,8 @@
   - [X] Show the current element differently
 - [X] Use a filter to activate the plugin for admin / translator only
 - [X] Create a configuration file
-- [X] Handle new translation key added to a locale (translation upgrade)
+- [X] Handle new translation key added to a locale (translation update)
+- [ ] Handle translation key removed from a locale (translation update)
 - [X] Create a command to automatically update localisation file on watched files change
 
 ## Instalation
@@ -76,6 +77,15 @@ Lari18n is packed with a artisan command to help you in the translation process.
   php artisan lari18n:new [from_locale] [to_locale]
 ```
 
+### Translation changes
+
+You can watch your translations directory using gulp or grunt and apply the update command on file change
+
+```
+  php artisan lari18n:update
+```
+
+This command will update all other locales files with the changes made on the fallback locale files. 
 
 ## License
 This Laravel package is open-sourced licensed under the [MIT license](http://opensource.org/licenses/MIT)
