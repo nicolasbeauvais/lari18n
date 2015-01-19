@@ -37,7 +37,7 @@ class Lari18n
     /**
      * @var string
      */
-    private $todo_translation_key;
+    public $todo_translation_key;
 
     /**
      * @var array
@@ -58,6 +58,11 @@ class Lari18n
      * @var bool
      */
     private static $activated = false;
+
+    /**
+     * @var array
+     */
+    private $i18nData = [];
 
     /**
      * Construct lari18n.
@@ -283,6 +288,10 @@ class Lari18n
      */
     public function retrieveI18nData()
     {
+        if (!empty($this->i18nData)) {
+            return $this->i18nData;
+        }
+
         // Initialise lari18n data.
         $this->makeI18nData();
 
@@ -292,6 +301,8 @@ class Lari18n
         $data['languages'] = $this->languagesList;
         $data['languagesData'] = $this->languagesData;
         $data['languagesProgress'] = $this->languagesProgress;
+
+        $this->i18nData = $data;
 
         return $data;
     }
@@ -398,4 +409,16 @@ class Lari18n
     {
         self::$activated = true;
     }
+
+    /**
+     * Recursive localisation item reinitialisation.
+     *
+     * @param $item
+     * @param $key
+     */
+    private function updateRecursiveWalk($item, $key)
+    {
+        dd ($item, $key);
+    }
+
 }

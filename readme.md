@@ -10,8 +10,8 @@
   - [X] Show the current element differently
 - [X] Use a filter to activate the plugin for admin / translator only
 - [X] Create a configuration file
-- [ ] Handle new translation key added to a locale (translation upgrade)
-- [ ] Create a command to automatically update localisation file on watched files change
+- [X] Handle new translation key added to a locale (translation upgrade)
+- [X] Create a command to automatically update localisation file on watched files change
 
 ## Instalation
 
