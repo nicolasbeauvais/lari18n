@@ -11,8 +11,9 @@
 - [X] Use a filter to activate the plugin for admin / translator only
 - [X] Create a configuration file
 - [X] Handle new translation key added to a locale (translation update)
-- [ ] Handle translation key removed from a locale (translation update)
+- [X] Handle translation key removed from a locale (translation update)
 - [X] Create a command to automatically update localisation file on watched files change
+- [ ] Backup translations file (little visioning?) before updating
 
 ## Instalation
 
@@ -85,7 +86,13 @@ You can watch your translations directory using gulp or grunt and apply the upda
   php artisan lari18n:update
 ```
 
-This command will update all other locales files with the changes made on the fallback locale files. 
+This command will update all other locales files with the additions made on the fallback locale files.
+
+If you also want to remove the entry that doesn't exist in your fallback locale you can use the `remove` option
+
+```
+  php artisan lari18n:update --remove
+```
 
 ## License
 This Laravel package is open-sourced licensed under the [MIT license](http://opensource.org/licenses/MIT)
