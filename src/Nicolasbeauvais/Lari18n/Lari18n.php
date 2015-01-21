@@ -372,6 +372,29 @@ class Lari18n
     }
 
     /**
+     * Remove a translation value from the corresponding localisation file.
+     *
+     * @param $locale
+     * @param $key
+     *
+     * @return string
+     */
+    public function remove($locale, $key)
+    {
+        // Initialise lari18n AJAX data.
+        $this->retrieveI18nData();
+        array_forget($this->languagesData[$locale], $key);
+
+        $filePath = explode('.', $key);
+
+        array_pop($filePath);
+
+        $file = $this->paths['lang'] . '/' . $locale . '/' . implode('/', $filePath) . '.php';
+
+        File::put($file, '<?php' . "\r\n\r\n" . 'return ' . var_export($this->languagesData[$locale][implode('.', $filePath)], true) . ';');
+    }
+
+    /**
      * Put the new choice type translation value in the corresponding localisation file.
      *
      * @param $fallback_locale
