@@ -3,8 +3,8 @@
 namespace Nicolasbeauvais\Lari18n\Commands;
 
 use Config;
+use File;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Nicolasbeauvais\Lari18n\Lari18n;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -78,6 +78,29 @@ class UpdateTranslation extends Command
 			];
 		}
 
+		// Empty line
+		$this->info('');
+
+		// Backup
+		if (!$this->option('nobackup')) {
+
+			// Create storage directory if it doesn't exist
+			if (!File::isDirectory($Lari18n->paths['backup'])) {
+				File::makeDirectory($Lari18n->paths['backup'], null, true);
+			}
+
+			$filename = $Lari18n->paths['backup'] . date('y-m-d_his') . '_backup';
+
+			// Create Backup directory
+			File::makeDirectory($filename);
+
+			// Backup all language files
+			File::copyDirectory($Lari18n->paths['lang'], $filename);
+
+			// Log
+			$this->info('Backup created in ' . 'app' . str_replace(array(app_path(), '\\'), array('', '/'), $filename));
+		}
+
 		// Walk on all master translations
 		foreach ($masterDataDot as $key => $value) {
 
@@ -96,7 +119,13 @@ class UpdateTranslation extends Command
 		if (!$this->option('remove')) {
 
 			foreach ($updated as $locale => $numbers) {
-				$this->info('+' . $numbers['add'] . ' ' . $locale . ' locale lines updated');
+
+
+				if ($numbers['add'] === 0) {
+					$this->info('No modification for the ' . $locale . ' locale lines');
+				} else {
+					$this->info('+' . $numbers['add'] . ' ' . $locale . ' locale lines updated');
+				}
 			}
 
 			return;
@@ -119,7 +148,12 @@ class UpdateTranslation extends Command
 		}
 
 		foreach ($updated as $locale => $numbers) {
-			$this->info('+' . $numbers['add'] . ' -' . $numbers['delete'] . ' ' . $locale . ' locale lines updated');
+
+			if ($numbers['add'] === 0 && $numbers['delete'] === 0) {
+				$this->info('No modification for the ' . $locale . ' locale lines');
+			} else {
+				$this->info('+' . $numbers['add'] . ' -' . $numbers['delete'] . ' ' . $locale . ' locale lines updated');
+			}
 		}
 	}
 
@@ -141,7 +175,20 @@ class UpdateTranslation extends Command
 	protected function getOptions()
 	{
 		return array(
-			array('remove', null, InputOption::VALUE_NONE, 'Remove the missing translation that doesn\'t exist in the fallback local files', null)
+			array(
+				'remove',
+				null,
+				InputOption::VALUE_NONE,
+				'Remove the missing translation that doesn\'t exist in the fallback local files',
+				null
+			),
+			array(
+				'nobackup',
+				null,
+				InputOption::VALUE_NONE,
+				'Lari18n will not backup automatically the translation files before modifying them',
+				null
+			)
 		);
 
 	}

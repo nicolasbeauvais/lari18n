@@ -27,7 +27,7 @@ class Lari18n
     /**
      * @var array
      */
-    private $paths= [];
+    public $paths= [];
 
     /**
      * @var Lari18n
@@ -72,7 +72,8 @@ class Lari18n
         $this->app = app();
         $this->paths = [
             'js' => asset('packages/nicolasbeauvais/lari18n/js') . '/',
-            'lang' => app_path() . '/lang'
+            'lang' => app_path('lang'),
+            'backup' => storage_path('packages/nicolasbeauvais/lari18n/')
         ];
         $this->todo_translation_key = Config::get('lari18n::todo_translation_key');
     }

@@ -15,7 +15,7 @@
 - [X] Create a command to automatically update localisation file on watched files change
 - [ ] Backup translations file (little visioning?) before updating
 
-## Instalation
+## Installation
 
 #### Composer
 
