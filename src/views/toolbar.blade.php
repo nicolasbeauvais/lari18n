@@ -46,7 +46,7 @@
     </span>
 
     <span id="lari-toolbar-info-hide">X</span>
-    <a id="lari-toolbar-info-documentation" href="" target="_blank">Documentation</a>
+    <a id="lari-toolbar-info-documentation" href="https://github.com/nicolasbeauvais/lari18n/" target="_blank">Documentation</a>
 </div>
 
 <div id="lari-overlay">
