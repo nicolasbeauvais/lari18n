@@ -1,6 +1,14 @@
 # Lari18n (Beta)
 > Translation made easy
 
+## Demo
+
+###### Lari18n Toolbar
+![toolbar-demo](https://cloud.githubusercontent.com/assets/2951704/5892985/9524f12c-a4d4-11e4-89ba-d909b1cb0bc1.png)
+
+###### Lari18n translation overlay
+![overlay-demo](https://cloud.githubusercontent.com/assets/2951704/5892986/9527a8a4-a4d4-11e4-9bcc-8b7bbdab4088.png)
+
 ## Installation
 
 #### Composer
