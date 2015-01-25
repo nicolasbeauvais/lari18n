@@ -1,6 +1,24 @@
 # Lari18n (Beta)
 > Translation made easy
 
+## Description
+Did you ever experienced the struggle of translating a website ? Well, maybe not, a PHP array is probably really easy to read for you !
+
+But in most case the translation is made by non technical profile, like a proffessional translator. Unfortunately,a large portion of them do not know PHP array.
+
+Sure, they can learn how it work, or you can generate some po files, but where is the context in that ?
+
+```php
+return array(
+	'previous' => '&laquo; Previous',
+	'next'     => 'Next &raquo;',
+);
+```
+
+What if we can gave them a tool to translate a whole website without touching any PHP file and with a full context of the translation ?
+
+This is the goal of Lari18n
+
 ## Demo
 
 ###### Lari18n Toolbar
