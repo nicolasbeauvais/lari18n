@@ -266,7 +266,7 @@ Lari.overlay.sendTranslate = function (e) {
 };
 
 Lari.overlay.callbackChoice = function (data) {
-    Lari.overlay.$current.text(data);
+    Lari.overlay.$current.removeClass('lari18n-missing lari18n-todo').text(data);
     $('.lari18n-missing:first,.lari18n-todo:first').click();
 };
 
@@ -284,7 +284,6 @@ Lari.overlay.translate = function (e) {
     $('.lari18n-selected').removeClass('lari18n-selected');
     Lari.overlay.$current.addClass('lari18n-selected');
 
-    // @TODO: put that in a overlay translate init method
     $('#lari-overlay-replace').find('.lari-overlay-replace').remove();
     $('#lari-overlay-replace').addClass('hide');
     $('#lari-overlay').show();
@@ -328,6 +327,9 @@ Lari.overlay.translate = function (e) {
  * Hide the overlay.
  */
 Lari.overlay.hide = function () {
+
+    $('.lari18n-selected').removeClass('lari18n-selected');
+
     Lari.overlay.$current = null;
     $('#lari-overlay').hide();
 };
@@ -342,7 +344,6 @@ Lari.overlay.desactivate = function () {
     $('#lari-overlay-hide').unbind('click.lari', Lari.overlay.hide);
     $('#lari-overlay-form-translation').unbind('keypress.lari', Lari.overlay.sendTranslate);
 };
-
 
 
 /**
