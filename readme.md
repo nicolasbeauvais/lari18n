@@ -1,19 +1,5 @@
-# Lari18n (In development)
-> A live internationalisation edition tool for laravel
-
-## Missing key features
-
-- [X] Make it work with vars in translation string
-- [X] Handle the Lang::choice method
-- [X] More productivity with the Lari18n overlay
-  - [X] Automatically go to the next item after a successful translation
-  - [X] Show the current element differently
-- [X] Use a filter to activate the plugin for admin / translator only
-- [X] Create a configuration file
-- [X] Handle new translation key added to a locale (translation update)
-- [X] Handle translation key removed from a locale (translation update)
-- [X] Create a command to automatically update localisation file on watched files change
-- [ ] Backup translations file (little visioning?) before updating
+# Lari18n (Beta)
+> Translation made easy
 
 ## Installation
 
