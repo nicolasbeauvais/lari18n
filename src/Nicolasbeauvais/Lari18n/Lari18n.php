@@ -176,6 +176,8 @@ class Lari18n
         } elseif (($response->headers->has('Content-Type') &&
                 strpos($response->headers->get('Content-Type'), 'html') === false) || 'html' !== $request->format()) {
             return $response;
+        } elseif (!($response instanceof Response)) {
+            return $response;
         }
 
         $this->injectToolbar($response);
