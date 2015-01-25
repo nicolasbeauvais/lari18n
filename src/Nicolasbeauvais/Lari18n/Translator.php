@@ -71,12 +71,17 @@ class Translator extends LaravelTranslator
 
         $replace['count'] = $number;
 
-        $choosed = $this->makeReplacements($this->getSelector()->choose($line, $number, $locale), $replace);
+        $hasTodo = strpos($line, $this->lari18n->todo_translation_key) > -1;
+
+        $chosen = $this->makeReplacements($this->getSelector()->choose($line, $number, $locale), $replace);
+
+        // Reapply the todo_translation_key if needed
+        $chosen = $hasTodo ? $this->lari18n->todo_translation_key . $chosen : $chosen;
 
         if ($wrap == false) {
-            return $choosed;
+            return $chosen;
         } else {
-            return $this->lari18n->wrap($choosed, $key, $replace, $locale, $number, $wrap);
+            return $this->lari18n->wrap($chosen, $key, $replace, $locale, $number, $wrap);
         }
     }
 }
