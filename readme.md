@@ -1,6 +1,8 @@
 # Lari18n (Beta)
 > Translation made easy
 
+**Lari18n provide an easy to use graphical interface to interact with each translated text.**
+
 ## Description
 Did you ever experienced the struggle of translating a website ? Well, maybe not, a PHP array is probably really easy to read for you !
 
