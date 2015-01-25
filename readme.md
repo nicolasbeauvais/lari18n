@@ -45,7 +45,7 @@ and this command for the configuration file
 
 You should comment (or remove) the laravel translation service provider and use lari18n instead
 
-```
+```php
   'providers' => array(
       // ...
       //'Illuminate\Translation\TranslationServiceProvider',
