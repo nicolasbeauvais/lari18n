@@ -26,7 +26,11 @@
 
 <div id="lari-toolbar-info-toggle">L</div>
 
-<div id="lari-toolbar-info" data-fallback_locale="{{ $data['fallback_locale'] }}" data-locale="{{ $data['locale'] }}">
+<div id="lari-toolbar-info"
+     data-fallback_locale="{{ $data['fallback_locale'] }}"
+     data-locale="{{ $data['locale'] }}"
+     data-public="{{ asset('') }}"
+     data-_token="{{ csrf_token() }}">
 
     <span id="lari-toolbar-info-desactivated">
         Lari18n is ready to translate this page.
