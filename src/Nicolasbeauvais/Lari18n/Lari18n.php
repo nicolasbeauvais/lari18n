@@ -278,8 +278,9 @@ class Lari18n
         $data['languagesProgress'] = $this->languagesProgress;
 
         // Get stats
-        $data['perc'] = round(($data['languagesProgress'][$data['locale']] * 100) /
-            $data['languagesProgress'][$data['fallback_locale']]);
+        $progress = $data['languagesProgress'];
+        $perc = round(($progress[$data['locale']] * 100) / $progress[$data['fallback_locale']]);
+        $data['perc'] = $perc > 100 ? 100 : $perc;
 
         return ['data' => $data];
     }
