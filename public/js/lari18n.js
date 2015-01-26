@@ -14,11 +14,6 @@ Lari.data = {};
 Lari.init = function () {
 
     Lari.dom.init();
-
-    // Insert stylesheets to DOM
-    for (var i = 0; i < Lari.styles.length; i++) {
-        Lari.loadStyle(Lari.styles[i]);
-    }
 };
 
 /**
@@ -42,7 +37,7 @@ Lari.loadStyle = function (name) {
 
     var style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = 'packages/nicolasbeauvais/lari18n/css/' +  name + '.css';
+    style.href = Lari.data.public + 'packages/nicolasbeauvais/lari18n/css/' +  name + '.css';
 
     $('head:first').append(style);
 };
@@ -122,6 +117,11 @@ Lari.dom.loaded = function (data) {
 
     // Init data
     Lari.data = $('#lari-toolbar-info').data();
+
+    // Insert stylesheets to DOM
+    for (var i = 0; i < Lari.styles.length; i++) {
+        Lari.loadStyle(Lari.styles[i]);
+    }
 };
 
 
