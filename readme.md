@@ -67,7 +67,6 @@ You should comment (or remove) the laravel translation service provider and use 
       'Nicolasbeauvais\Lari18n\Lari18nServiceProvider'
   ),
 ```
-Now, every time you use `trans()` or `Lang::get()` lari18n will be able to do some magic work.
 
 ## Using Lari18n
 
@@ -77,6 +76,14 @@ To activate Lari18n you can use the activate method. For example in a filter for
 ```php
 \Nicolasbeauvais\Lari18n\Lari18n::activate();
 ```
+Now, every time you use `trans()` or `Lang::get()` lari18n will be able to do some magic work.
+
+
+#####But how to choose which translation you want to perform ?
+
+Lari18n use the `app.fallback_locale` as the **reference** language
+and the `app.locale` as the language to **translate**.
+
 
 #### New Translation
 
